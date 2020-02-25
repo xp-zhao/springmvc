@@ -12,6 +12,6 @@ import lombok.Data;
 public class Round {
 
   private String roundName;
-  private LocalDateTime startTime;
-  private LocalDateTime endTime;
+  private String startTime;
+  private String endTime;
 }

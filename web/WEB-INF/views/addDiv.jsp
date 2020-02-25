@@ -18,8 +18,13 @@
            class="form-horizontal">
     <input id="addPrize" class="btn btn-primary" type="submit" value="添加设置"/>
     <div class="control-group">
+        <label>名称:</label>
         <form:input id="roundName" path="roundName" htmlEscape="false" maxlength="15"
                     class="input-medium required"/>
+        <label>时间:</label>
+        <form:input path="startTime" htmlEscape="false" readonly="true" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" class="input-medium Wdate required"/>
+        <label>&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <form:input path="endTime" htmlEscape="false" readonly="true" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" class="input-medium Wdate required"/>
     </div>
 </form:form>
 </body>
