@@ -40,22 +40,28 @@
     </c:forEach>
     </tbody>
 </table>
-<c:forEach items="${list}" var="round" varStatus="status">
-    <div id='div_${i}' name='cloneDiv' class='div_css'>
-        <label>名称：</label>
-        <input name="roundList[${i}].roundName" maxlength='15' class='input-medium required'/>
-        <label>时间:</label>
-        <input name="roundList[${i}].startTime" readonly="true"
-               onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"
-               class="input-medium Wdate required"/>
-        <label>&nbsp;--&nbsp;</label>
-        <input name="roundList[${i}].endTime" readonly="true"
-               onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"
-               class="input-medium Wdate required"/>
-        <input id="delBtn_${i}" class='btn btn-primary' name='delbtn' style='margin-left: 8px;'
-               type='button' value='删除' onclick='cancelDiv(this)'/>
-    </div>
-</c:forEach>
-
+<form:form id="inputForm" modelAttribute="contest" action="${ctx}/contest/save" method="post"
+           class="form-horizontal">
+    <c:forEach items="${list1}" var="round" varStatus="idIndex">
+        <div id='div_${idIndex.index}' name='cloneDiv' class='div_css'>
+            <label>名称：</label>
+            <input name="roundList[${idIndex.index}].roundName" maxlength='15'
+                   class='input-medium required' value="${round.roundName}"/>
+            <label>时间:</label>
+            <input name="roundList[${idIndex.index}].startTime" readonly="true"
+                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"
+                   value="${round.startTime}"
+                   class="input-medium Wdate required"/>
+            <label>&nbsp;--&nbsp;</label>
+            <input name="roundList[${idIndex.index}].endTime" readonly="true"
+                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"
+                   value="${round.endTime}"
+                   class="input-medium Wdate required"/>
+            <input id="delBtn_${idIndex.index}" class='btn btn-primary' name='delbtn'
+                   style='margin-left: 8px;'
+                   type='button' value='删除' onclick='cancelDiv(this)'/>
+        </div>
+    </c:forEach>
+</form:form>
 </body>
 </html>

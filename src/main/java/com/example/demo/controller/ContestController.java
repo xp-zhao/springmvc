@@ -24,6 +24,8 @@ public class ContestController {
   public String save(Contest contest, Model model) {
     System.out.println(contest.getName());
     model.addAttribute("list", contest.getRoundList());
+    model.addAttribute("list1", contest.getRoundList());
+    model.addAttribute("contest", contest);
     return "listContest";
   }
 }

@@ -43,10 +43,8 @@
                                 class="input-medium Wdate required"/>
                 <input id="delBtn_\${i}" class='btn btn-primary' name='delbtn' style='margin-left: 8px;' type='button' value='删除' onclick='cancelDiv(this)'/>
             </div>`;
-    alert(html);
     if (i > 0) {
       let j = i - 1;
-      alert(j);
       $("#roundDiv").find(`div[id='div_\${j}']`).after(html);
     } else {
       $("#roundDiv").append(html);
