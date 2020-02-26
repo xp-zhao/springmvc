@@ -21,8 +21,9 @@ public class ContestController {
   }
 
   @RequestMapping("/save")
-  public String save(Contest contest) {
+  public String save(Contest contest, Model model) {
     System.out.println(contest.getName());
-    return "index";
+    model.addAttribute("list", contest.getRoundList());
+    return "listContest";
   }
 }

@@ -18,57 +18,46 @@
            class="form-horizontal">
     <div class="control-group">
         <label class="form-inline">比赛名称:
-            <form:input id="contestName" path="name" htmlEscape="false" maxlength="15"
-                        class="input-medium required"/>
-                <%--            <form:input id="roundList" path="roundList" type="hidden"/>--%>
+            <input id="contestName" name="name" maxlength="15" class="input-medium required"/>
         </label>
     </div>
     <input id="addRound" class="btn btn-primary" type="button" value="添加轮次"/>
     <div id="roundDiv" class="breadcrumb form-search more-info-content"/>
-    <div id="div_1" name="cloneDiv1" class="div_css">
-<%--        <label>名称：</label>--%>
-<%--        <form:input id="roundName" path="roundList[0].roundName" htmlEscape="false"--%>
-<%--                    maxlength="15"--%>
-<%--                    class="input-medium required"/>--%>
-            <%--        <label>时间:</label>--%>
-            <%--        <form:input path="roundList[1].startTime" htmlEscape="false" readonly="true"--%>
-            <%--                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"--%>
-            <%--                    class="input-medium Wdate required"/>--%>
-            <%--        <label>&nbsp;--&nbsp;</label>--%>
-            <%--        <form:input path="roundList[1].endTime" htmlEscape="false" readonly="true"--%>
-            <%--                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"--%>
-            <%--                    class="input-medium Wdate required"/>--%>
-    </div>
     <div class="form-actions">
         <input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>
     </div>
 </form:form>
 <script type="text/javascript">
   $("#addRound").bind("click", function () {
-    let i = $("#roundDiv").find("div[name='cloneDiv']").length + 1;
-    let path = `contest.roundList[\${i}].roundName`;
-    alert(path);
-    <%--let form_input = `<form:input id="input_0" path='contest.roundList[0].roundName' htmlEscape='false'/>`;--%>
+    let i = $("#roundDiv").find("div[name='cloneDiv']").length;
     const html = `<div id='div_\${i}' name='cloneDiv' class='div_css'>
-               <label>名称：</label>
-               <form:input id="input_0" path="contest.roundList[0].roundName" htmlEscape='false'
-                            maxlength='15'
-                            class='input-medium required'/>
+                <label>名称：</label>
+                <input name="roundList[\${i}].roundName" maxlength='15' class='input-medium required'/>
                 <label>时间:</label>
+                <input name="roundList[\${i}].startTime" readonly="true"
+                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"
+                                class="input-medium Wdate required"/>
                 <label>&nbsp;--&nbsp;</label>
+                <input name="roundList[\${i}].endTime" readonly="true"
+                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"
+                                class="input-medium Wdate required"/>
+                <input id="delBtn_\${i}" class='btn btn-primary' name='delbtn' style='margin-left: 8px;' type='button' value='删除' onclick='cancelDiv(this)'/>
             </div>`;
-
     alert(html);
     if (i > 0) {
       let j = i - 1;
+      alert(j);
       $("#roundDiv").find(`div[id='div_\${j}']`).after(html);
-      // $("#roundDiv").find("div[name='cloneDiv']").find("input[name='setbtn']").remove();
     } else {
       $("#roundDiv").append(html);
-      $("#input_0").attr("path", path);
-      alert($("#input_0").val());
     }
   });
+
+  function cancelDiv(obj) {
+    let idString = obj.parentElement.id;
+    let ids = idString.split("_");
+    $("#div_" + ids[1]).remove();
+  }
 </script>
 </body>
 </html>
