@@ -27,5 +27,13 @@
         <form:input path="endTime" htmlEscape="false" readonly="true" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" class="input-medium Wdate required"/>
     </div>
 </form:form>
+
+<%--<script src="${ctxStatic}/js/addDiv.js" type="text/javascript"></script>--%>
+<script type="text/javascript">
+  $("#add").bind("click", function () {
+    var i = 0
+    alert(`test\${i}`);
+  });
+</script>
 </body>
 </html>
