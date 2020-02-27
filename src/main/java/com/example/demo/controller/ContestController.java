@@ -53,8 +53,8 @@ public class ContestController {
   public List<ContestBase> listData() {
     List<ContestBase> list = Arrays.asList(
         ContestBase.builder().baseId("001").baseCode("001").baseName("001测试").build(),
-        ContestBase.builder().baseId("002").baseCode("002").baseName("002测试").build(),
-        ContestBase.builder().baseId("003").baseCode("003").baseName("003测试").build());
+        ContestBase.builder().baseId("001").baseCode("001").baseName("002测试").build(),
+        ContestBase.builder().baseId("001").baseCode("003").baseName("003测试").build());
     return list;
   }
 }
