@@ -14,32 +14,7 @@
     <title>列表</title>
 </head>
 <body style="text-align: center;line-height: 35px;">
-<table id="contentTable"
-       class="table table-striped table-bordered table-condensed">
-    <thead>
-    <tr>
-        <th><input type="checkbox" id="chkAll"/>
-        </th>
-        <th>名称</th>
-        <th>开始时间</th>
-        <th>结束时间</th>
-        <th>操作</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${list}" var="round" varStatus="status">
-        <tr>
-            <td style="width:18px"><input type="checkbox" name="chkItem"
-                                          value="${round.roundName}"/>
-            </td>
-            <td>${round.roundName}</td>
-            <td>${round.startTime}</td>
-            <td>${round.endTime}</td>
-            <td></td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
+<table id="contestTable" class="table table-hover"></table>
 <form:form id="inputForm" modelAttribute="contest" action="${ctx}/contest/save" method="post"
            class="form-horizontal">
     <c:forEach items="${list1}" var="round" varStatus="idIndex">
@@ -63,5 +38,59 @@
         </div>
     </c:forEach>
 </form:form>
+<script type="text/javascript">
+  $('#contestTable').bootstrapTable({
+    url: '${ctx}/contest/listData',
+    method: 'get',
+    // queryParams: "queryParams",
+    toolbar: "#toolbar",
+    sidePagination: "true",
+    striped: true, // 是否显示行间隔色
+    pageSize: "5",
+    pagination: true, // 是否分页
+    sortable: true, // 是否启用排序
+    detailView: true,
+    detailFormatter: "detailFormatter",
+    onExpandRow: function (index, row, $detail) {
+      alert(JSON.stringify(row));
+    },
+    columns: [{
+      field: 'baseId',
+      title: 'Id'
+    },
+      {
+        field: 'baseCode',
+        title: '编号'
+      },
+      {
+        field: 'baseName',
+        title: '名称'
+      },
+      {
+        title: '操作',
+        width: 120,
+        align: 'center',
+        valign: 'middle',
+        formatter: actionFormatter,
+      },
+
+    ]
+  });
+
+  //操作栏的格式化
+  function actionFormatter(value, row, index) {
+    // let id = value;
+    // let result = "";
+    // result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"EditViewById('" + id
+    //     + "', view='view')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
+    // result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + id
+    //     + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
+    // result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + id
+    //     + "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
+    // return result;
+    let htm = "<button>删除</button><button>修改</button>"
+    return htm;
+  }
+</script>
 </body>
 </html>

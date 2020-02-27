@@ -9,7 +9,7 @@
 
   <description>Spring MVC Configuration</description>
 
-  <mvc:annotation-driven/>
+<!--  <mvc:annotation-driven/>-->
   <!-- 加载配置属性文件 -->
   <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties"/>
 
@@ -49,5 +49,18 @@
 
   <!-- 定义无Controller的path<->view直接映射 -->
   <mvc:view-controller path="/" view-name="redirect:${web.view.index}"/>
+  <mvc:annotation-driven>
+    <mvc:message-converters>
+      <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+      <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+          <list>
+            <value>text/html;charset=UTF-8</value>
+            <value>application/json;charset=UTF-8</value>
+          </list>
+        </property>
+      </bean>
+    </mvc:message-converters>
+  </mvc:annotation-driven>
 
 </beans>

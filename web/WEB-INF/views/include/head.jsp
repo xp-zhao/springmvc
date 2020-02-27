@@ -9,6 +9,9 @@
 <link href="${ctxStatic}/bootstrap/2.3.1/css_${not empty cookie.theme.value ? cookie.theme.value : 'cerulean'}/bootstrap.min.css"
       type="text/css" rel="stylesheet"/>
 <script src="${ctxStatic}/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="${ctxStatic}/bootstrap/bsie/js/bootstrap-ie.min.js" type="text/javascript"></script>
+<%--<script src="${ctxStatic}/bootstrap/colorpicker/js/bootstrap-colorpicker.min.js" type="text/javascript"></script>--%>
+<%--<script src="${ctxStatic}/bootstrap/colorpicker/css/bootstrap-colorpicker.min.css" type="text/javascript"></script>--%>
+<script src="${ctxStatic}/bootstrap/bootstrap-table/bootstrap-table.min.js" type="text/javascript"></script>
+<script src="${ctxStatic}/bootstrap/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript"></script>
 <script src="${ctxStatic}/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '${ctx}', ctxStatic = '${ctxStatic}';</script>
