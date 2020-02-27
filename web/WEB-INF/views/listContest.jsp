@@ -14,7 +14,7 @@
     <title>列表</title>
 </head>
 <body style="text-align: center;line-height: 35px;">
-<table id="contestTable" class="table table-hover"></table>
+<table id="contestTable" class="table table-bordered"></table>
 <form:form id="inputForm" modelAttribute="contest" action="${ctx}/contest/save" method="post"
            class="form-horizontal">
     <c:forEach items="${list1}" var="round" varStatus="idIndex">
@@ -49,8 +49,8 @@
     pageSize: "5",
     pagination: true, // 是否分页
     sortable: true, // 是否启用排序
-    detailView: true,
-    detailFormatter: "detailFormatter",
+    // detailView: true,
+    // detailFormatter: "detailFormatter",
     // onExpandRow: function (index, row, $detail) {
     //   alert(JSON.stringify(row));
     // },
@@ -78,8 +78,9 @@
     onLoadSuccess: function (data) {
       // 加载成功后合并单元格
       var data = $('#contestTable').bootstrapTable('getData', true);
-      alert(data);
+      // alert(data);
       mergeCells(data, "baseId", 1, $('#contestTable'));
+      mergeCells(data, "baseCode", 1, $('#contestTable'));
     }
   });
 
@@ -127,5 +128,10 @@
     return htm;
   }
 </script>
+<style type="text/css">
+    .table tbody tr td {
+        vertical-align: middle;
+    }
+</style>
 </body>
 </html>
