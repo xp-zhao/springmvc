@@ -15,45 +15,29 @@
 </head>
 <body style="text-align: center;line-height: 35px;">
 <table id="contestTable" class="table table-bordered"></table>
-<form:form id="inputForm" modelAttribute="contest" action="${ctx}/contest/save" method="post"
-           class="form-horizontal">
-    <c:forEach items="${list1}" var="round" varStatus="idIndex">
-        <div id='div_${idIndex.index}' name='cloneDiv' class='div_css'>
-            <label>名称：</label>
-            <input name="roundList[${idIndex.index}].roundName" maxlength='15'
-                   class='input-medium required' value="${round.roundName}"/>
-            <label>时间:</label>
-            <input name="roundList[${idIndex.index}].startTime" readonly="true"
-                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"
-                   value="${round.startTime}"
-                   class="input-medium Wdate required"/>
-            <label>&nbsp;--&nbsp;</label>
-            <input name="roundList[${idIndex.index}].endTime" readonly="true"
-                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"
-                   value="${round.endTime}"
-                   class="input-medium Wdate required"/>
-            <input id="delBtn_${idIndex.index}" class='btn btn-primary' name='delbtn'
-                   style='margin-left: 8px;'
-                   type='button' value='删除' onclick='cancelDiv(this)'/>
-        </div>
-    </c:forEach>
-</form:form>
 <script type="text/javascript">
   $('#contestTable').bootstrapTable({
     url: '${ctx}/contest/listData',
     method: 'get',
-    // queryParams: "queryParams",
+    queryParams: queryParams,
     toolbar: "#toolbar",
-    sidePagination: "true",
+    search: true,
+    sidePagination: "server",
     striped: true, // 是否显示行间隔色
-    pageSize: "5",
+    pageNumber: 1,
+    pageSize: 5,
+    pageList: [5, 10, 25, 50, 100],
+    paginationPreText: "Previous",
+    paginationNextText: "Next",
+    paginationFirstText: "First",
+    paginationLastText: "Last",
+    smartDisplay: false,
+    showFooter: true,
+    showHeader: true,
     pagination: true, // 是否分页
     sortable: true, // 是否启用排序
-    // detailView: true,
-    // detailFormatter: "detailFormatter",
-    // onExpandRow: function (index, row, $detail) {
-    //   alert(JSON.stringify(row));
-    // },
+    detailView: true, //1，开启详情视树形图模式
+    detailFormatter: "detailFormatter", //2，定义详情显示函数
     columns: [{
       field: 'baseId',
       title: 'Id'
@@ -75,14 +59,38 @@
       },
 
     ],
-    onLoadSuccess: function (data) {
-      // 加载成功后合并单元格
-      var data = $('#contestTable').bootstrapTable('getData', true);
-      // alert(data);
-      mergeCells(data, "baseId", 1, $('#contestTable'));
-      mergeCells(data, "baseCode", 1, $('#contestTable'));
-    }
+    // onLoadSuccess: function (data) {
+    //   // 加载成功后合并单元格
+    //   var data = $('#contestTable').bootstrapTable('getData', true);
+    //   // alert(data);
+    //   mergeCells(data, "baseId", 1, $('#contestTable'));
+    //   mergeCells(data, "baseCode", 1, $('#contestTable'));
+    // }
   });
+
+  //3, 定义详情显示函数
+  function detailFormatter(index, row) {
+    var html = []
+    $.each(row, function (key, value) {
+      if (key === "roundList") {
+        $.each(value, function (index, item) {
+          html.push(
+              '<p><b>' + item.roundName + ':</b> ' + item.startTime + ' - ' + item.endTime + '</p>')
+        })
+      }
+    });
+    return html.join('');
+  }
+
+  //请求服务数据时所传参数
+  function queryParams(params) {
+    return {
+      //每页多少条数据
+      pageSize: params.limit,
+      //请求第几页
+      pageNumber: Math.ceil(params.offset / params.limit) + 1,
+    }
+  }
 
   function mergeCells(data, fieldName, colspan, target) {
     //声明一个map计算相同属性值在data对象出现的次数和
@@ -131,6 +139,11 @@
 <style type="text/css">
     .table tbody tr td {
         vertical-align: middle;
+    }
+
+    /*去掉表格与分页之间的空白*/
+    .fixed-table-body {
+        height: auto;
     }
 </style>
 </body>

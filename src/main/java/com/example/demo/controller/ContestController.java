@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Contest;
 import com.example.demo.entity.ContestBase;
+import com.example.demo.entity.ContestBasePage;
+import com.example.demo.entity.Round;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -25,7 +27,7 @@ public class ContestController {
   }
 
   @RequestMapping("/index")
-  public String index(){
+  public String index() {
     return "index";
   }
 
@@ -50,11 +52,23 @@ public class ContestController {
 
   @RequestMapping("/listData")
   @ResponseBody
-  public List<ContestBase> listData() {
+  public ContestBasePage listData(Integer pageSize, Integer pageNumber) {
+    List<Round> rounds = Arrays.asList(
+        Round.builder().roundName("初赛").startTime("2019-01-01").endTime("2020-01-01").build(),
+        Round.builder().roundName("复赛").startTime("2019-01-01").endTime("2020-01-01").build(),
+        Round.builder().roundName("决赛").startTime("2019-01-01").endTime("2020-01-01").build());
     List<ContestBase> list = Arrays.asList(
-        ContestBase.builder().baseId("001").baseCode("001").baseName("001测试").build(),
-        ContestBase.builder().baseId("001").baseCode("001").baseName("002测试").build(),
-        ContestBase.builder().baseId("001").baseCode("003").baseName("003测试").build());
-    return list;
+        ContestBase.builder().baseId("001").baseCode("001").baseName("001测试").roundList(rounds).build(),
+        ContestBase.builder().baseId("001").baseCode("001").baseName("002测试").roundList(rounds).build(),
+        ContestBase.builder().baseId("001").baseCode("001").baseName("003测试").roundList(rounds).build(),
+        ContestBase.builder().baseId("002").baseCode("002").baseName("002测试").roundList(rounds).build(),
+        ContestBase.builder().baseId("003").baseCode("003").baseName("002测试").roundList(rounds).build(),
+        ContestBase.builder().baseId("003").baseCode("003").baseName("003测试").roundList(rounds).build(),
+        ContestBase.builder().baseId("004").baseCode("001").baseName("002测试").roundList(rounds).build(),
+        ContestBase.builder().baseId("005").baseCode("003").baseName("003测试").roundList(rounds).build());
+    int size = pageSize * pageNumber;
+    List<ContestBase> pageList = list
+        .subList((pageNumber - 1) * pageSize, size > list.size() ? list.size() : size);
+    return ContestBasePage.builder().rows(pageList).total(list.size()).build();
   }
 }
